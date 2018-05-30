@@ -30,4 +30,4 @@ If you need to build custome security rules, you should clone the reference API 
 
 
 ## NOTE
-for more details, visit https://izyware.com
+for more details, visit https://izyware.com/help/article/using-izycloud-on-android-izycloud-query-app

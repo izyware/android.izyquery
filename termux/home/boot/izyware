@@ -1,0 +1,15 @@
+#!/data/data/com.termux/files/usr/bin/bash
+> $HOME/izyware.log
+echo "$(date +'%a %F %T %Z') [izyware] start" >> $HOME/izyware.log 2>&1
+termux-wake-lock
+sshd
+echo "$(date +'%a %F %T %Z') [izyware] sshd up" >> $HOME/izyware.log 2>&1
+node -v >> $HOME/izyware.log
+whoami >> $HOME/izyware.log
+echo "$(date +'%a %F %T %Z') [izyware] node exit code $?" >> $HOME/izyware.log 2>&1
+echo "$(date +'%a %F %T %Z') [izyware] publish port" >> $HOME/izyware.log 2>&1
+cd $HOME;
+# izy.devops "ssh?publishssh" $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
+node $HOME/izyware/devops/bin/izy.js "ssh?publishssh" $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
+# $HOME/izyware/devops/ssh/publishssh.sh $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
+echo "$(date +'%a %F %T %Z') [izyware] done $?" >> $HOME/izyware.log 2>&1

@@ -1,7 +1,67 @@
-## Izy Query For Android
-Izy Query tool for Android devices. Allows you to import/export data to the IzyCloud.
 
-## Usage
+
+# Phone Setup
+While not strictly required, we recommend that you use anydesk on Andoid to remotely navigate the UI.
+
+## Termux + SSH
+* Install [termux]
+* Get system info (Android version, Device model, etc.)
+
+        termux-info
+
+* Setup SSH
+
+    
+        pkg install root-repo
+        pkg upgrade
+        pkg install openssh
+        # setup a password
+        passwd
+        # start ssh
+        sshd
+        
+This will setup ssh on port 8022. You can now ssh and rsync into the container (no user name required) using izy.devops:
+
+    izy.devops "ssh?shell" .
+    
+Note that the container home ("~") path will be `/data/data/com.termux/files/home`:
+
+    izy.devops "rsync?upload" .  "/Users/ofc1/izyware/izy-idman-tools/id/ID/" "/data/data/com.termux/files/home/izyware/izy-idman-tools/id/ID/"
+
+
+## Device Automation at startup
+Follow these
+
+* Install tools 
+
+        apt install vim rsync nodejs git
+        
+* Install [termux-boot]
+
+
+To run termux scripts at boot time and have it running in the background `termux-wake-lock` is needed. This will show a warning: "termux will be able to run in the background. Its battery usage wont be restricted".
+
+
+## Additional Device functionality
+* Install [termux.api]: Make sure to install the API app AND the package
+
+
+
+
+
+
+
+
+
+
+
+# Using izy-proxy macros and functions
+The SDK has syntactical parity with izy-proxy. For more information refer to izy-proxy documentation. 
+
+## Izy Query For Android
+Izy Query tool for Android devices. Allows you to import/export data to the IzyCloud. 
+
+Usage:
 
 
 ```
@@ -18,8 +78,6 @@ Izy Query tool for Android devices. Allows you to import/export data to the IzyC
 ```
 
 
-## POST URL
-
 We recommend using the IzyCloud API:
 
 ```
@@ -28,6 +86,20 @@ apps/smstest/mobile:api/clientsubmit
 
 If you need to build custome security rules, you should clone the reference API in the IzyCloud dashboard (enterprise only) and customize the package.
 
-
-## NOTE
 for more details, visit https://izyware.com/help/article/using-izycloud-on-android-izycloud-query-app
+
+
+# Links
+* [github]
+* location: `apps/android`
+
+# ChangeLog
+
+## V7.3
+* 7300001: izy.devops integration script at startup
+* 7300000: Instructions for terminal emulator and Linux environment app 
+
+[termux.api]:https://f-droid.org/en/packages/com.termux.api/
+[termux-boot]: https://github.com/termux/termux-boot
+[termux]: https://termux.dev/en/
+[github]: https://github.com/izyware/android.izyquery

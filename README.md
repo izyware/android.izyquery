@@ -4,7 +4,9 @@
 While not strictly required, we recommend that you use anydesk on Andoid to remotely navigate the UI.
 
 ## Termux + SSH
-* Install [termux]
+* Install [f-droid] 
+* Install [termux] through f-droid
+    * Android 10: You may get an error from "Google Play Protect" saying that Unsafe app blocked. Install anyways.
 * Get system info (Android version, Device model, etc.)
 
         termux-info
@@ -24,10 +26,6 @@ This will setup ssh on port 8022. You can now ssh and rsync into the container (
 
     izy.devops "ssh?shell" .
     
-Note that the container home ("~") path will be `/data/data/com.termux/files/home`:
-
-    izy.devops "rsync?upload" .  "/Users/ofc1/izyware/izy-idman-tools/id/ID/" "/data/data/com.termux/files/home/izyware/izy-idman-tools/id/ID/"
-
 
 ## Device Automation at startup
 Follow these
@@ -36,8 +34,12 @@ Follow these
 
         apt install vim rsync nodejs git
         
-* Install [termux-boot]
+* Install [termux-boot] through f-droid
 
+
+Note that the container home ("~") path will be `/data/data/com.termux/files/home`:
+    
+    izy.devops "rsync?upload" CONTAINER_PATH "~/plat/p/apps/android/termux/home/boot/" "/data/data/com.termux/files/home/.termux/boot/"
 
 To run termux scripts at boot time and have it running in the background `termux-wake-lock` is needed. This will show a warning: "termux will be able to run in the background. Its battery usage wont be restricted".
 
@@ -96,9 +98,11 @@ for more details, visit https://izyware.com/help/article/using-izycloud-on-andro
 # ChangeLog
 
 ## V7.3
+* 7300003: implement retry loop for bootscript 
 * 7300001: izy.devops integration script at startup
 * 7300000: Instructions for terminal emulator and Linux environment app 
 
+[f-droid]: https://f-droid.org/en/
 [termux.api]:https://f-droid.org/en/packages/com.termux.api/
 [termux-boot]: https://github.com/termux/termux-boot
 [termux]: https://termux.dev/en/

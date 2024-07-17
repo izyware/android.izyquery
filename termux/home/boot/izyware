@@ -1,15 +1,23 @@
 #!/data/data/com.termux/files/usr/bin/bash
 > $HOME/izyware.log
 echo "$(date +'%a %F %T %Z') [izyware] start" >> $HOME/izyware.log 2>&1
-termux-wake-lock
-sshd
-echo "$(date +'%a %F %T %Z') [izyware] sshd up" >> $HOME/izyware.log 2>&1
-node -v >> $HOME/izyware.log
-whoami >> $HOME/izyware.log
-echo "$(date +'%a %F %T %Z') [izyware] node exit code $?" >> $HOME/izyware.log 2>&1
-echo "$(date +'%a %F %T %Z') [izyware] publish port" >> $HOME/izyware.log 2>&1
-cd $HOME;
-# izy.devops "ssh?publishssh" $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
-node $HOME/izyware/devops/bin/izy.js "ssh?publishssh" $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
-# $HOME/izyware/devops/ssh/publishssh.sh $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
-echo "$(date +'%a %F %T %Z') [izyware] done $?" >> $HOME/izyware.log 2>&1
+termux-wake-lock >> $HOME/izyware.log 2>&1
+while :
+do
+  echo "$(date +'%a %F %T %Z') [izyware] sshd up" >> $HOME/izyware.log 2>&1
+  sshd >> $HOME/izyware.log 2>&1
+  node -v >> $HOME/izyware.log
+  whoami >> $HOME/izyware.log
+  echo "$(date +'%a %F %T %Z') [izyware] node exit code $?" >> $HOME/izyware.log 2>&1
+  cd $HOME;
+  echo "$(date +'%a %F %T %Z') [izyware] kill existing sessions" >> $HOME/izyware.log 2>&1
+  node $HOME/izyware/devops/bin/izy.js "ssh?shell" $HOME/vpn "echo kill_start;sudo netstat -ltnp | grep 22009 | sed --expression='s/.*LISTEN//' | sed --expression='s/\/sshd.*//' | xargs kill -9 " >> $HOME/izyware.log 2>&1
+  echo "$(date +'%a %F %T %Z') [izyware] sleep" >> $HOME/izyware.log 2>&1
+  sleep 10
+  echo "$(date +'%a %F %T %Z') [izyware] publish port" >> $HOME/izyware.log 2>&1
+  # izy.devops "ssh?publishssh" $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
+  node $HOME/izyware/devops/bin/izy.js "ssh?publishssh" $HOME/vpn 8022 >> $HOME/izyware.log 2>&1
+  echo "$(date +'%a %F %T %Z') [izyware] publish exit: $?" >> $HOME/izyware.log 2>&1
+  sleep 10
+  echo "$(date +'%a %F %T %Z') [izyware] loop" >> $HOME/izyware.log 2>&1
+done

@@ -65,6 +65,10 @@ You can then periodically transfer the audio chunks.
     
     izy.devops "rsync?download" $ANDROID_ID "/data/data/com.termux/files/home/izyware/izy-idman-tools/id/me/microphone/complete" $ANDROID_ID/../microphone --remove-source-files
     
+The stage of your AI pipeline could feed them into 
+
+    clear && printf '\e[3J'; python3 termux/home/surveilance/audioscan.py $ANDROID_ID/../microphone/complete -m true
+    
     
 ## Running scripts at device startup
 First make sure to install [termux-boot] through f-droid.
@@ -120,6 +124,7 @@ for more details, visit https://izyware.com/help/article/using-izycloud-on-andro
 # ChangeLog
 
 ## V7.5
+* 7500002: implement auddio scan
 * 7500001: implement microphone surveilance
     * allows for 24-7 surveilance and transfer of chunks for post processing
 

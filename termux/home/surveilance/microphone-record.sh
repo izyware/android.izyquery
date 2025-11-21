@@ -23,7 +23,7 @@ do
         sleep "$poll_interval"
     done
     timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-    outfile="$WORKSPACEDIR/inprogress/rec_$timestamp.$chunk_duration.wav"
+    outfile="$WORKSPACEDIR/inprogress/rec_$timestamp.$chunk_duration.m4a"
     (( $monitoring >= 1)) && echo "Starting new chunk: $outfile"
     termux-microphone-record -d -l $chunk_duration -f "$outfile" 
 done
